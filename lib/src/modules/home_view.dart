@@ -5,7 +5,7 @@ import 'package:game_perfomans/cubit/cubit_tab.dart';
 import 'package:game_perfomans/src/model/model.dart';
 
 class HomeView extends StatefulWidget {
-  const HomeView({Key? key}) : super(key: key);
+  const HomeView({super.key});
 
   @override
   State<HomeView> createState() => _HomeViewState();
@@ -21,14 +21,39 @@ class _HomeViewState extends State<HomeView> {
     "Loses",
     "Win rate",
   ];
-  List<String> items2 = [
-    "0",
-    "\$0",
-    "0h 0m",
-    "\$0",
-    "\$0",
-    "0%",
-  ];
+  int totalBets = 0;
+  int playtime = 0;
+  int won = 0;
+  int loses = 0;
+  double winRate = 0.0;
+
+  final gameNameControler = TextEditingController();
+  final amountController = TextEditingController();
+  final wonController = TextEditingController();
+  final playOneController = TextEditingController();
+  final playTwoController = TextEditingController();
+
+  void addInfo() {
+    String gameName = gameNameControler.text;
+    String amountText = amountController.text;
+    String wonText = wonController.text;
+    String playOneText = playOneController.text;
+    String playTwoText = playTwoController.text;
+
+    if (amountText.isEmpty ||
+        wonText.isEmpty ||
+        playOneText.isEmpty ||
+        playTwoText.isEmpty) {
+      // Display an error message or handle the error in some other way
+      return;
+    }
+    int amount = int.parse(amountText);
+    int won = int.parse(wonText);
+    int playOne = int.parse(playOneText);
+    int playTwo = int.parse(playTwoText);
+
+    // Rest of the code
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +124,7 @@ class _HomeViewState extends State<HomeView> {
                               ),
                             ),
                             Text(
-                              updateDigits(items2[index], '1234567890'),
+                              '${winRate.toStringAsFixed(2)}%',
                               style: const TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
@@ -110,35 +135,160 @@ class _HomeViewState extends State<HomeView> {
                         ),
                       );
                     }
-                    return Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16),
-                        color: const Color(0xFF363344),
-                      ),
-                      width: 19,
-                      height: 18,
-                      child: Column(
-                        children: [
-                          SizedBox(height: 15),
-                          Text(
-                            items[index],
-                            style: const TextStyle(
-                              fontSize: 12,
-                              fontWeight: FontWeight.w500,
-                              color: Colors.white,
-                            ),
+                    switch (index) {
+                      case 0:
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF363344),
                           ),
-                          Text(
-                            updateDigits(items2[index], '1234567890'),
-                            style: const TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white,
-                            ),
+                          width: 19,
+                          height: 18,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                items[index],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                gameDataList.length.toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
-                    );
+                        );
+                      case 1:
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF363344),
+                          ),
+                          width: 19,
+                          height: 18,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                items[index],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                totalBets.toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      case 2:
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF363344),
+                          ),
+                          width: 19,
+                          height: 18,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                items[index],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                '$playtime min',
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      case 3:
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF363344),
+                          ),
+                          width: 19,
+                          height: 18,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                items[index],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                won.toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      case 4:
+                        return Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16),
+                            color: const Color(0xFF363344),
+                          ),
+                          width: 19,
+                          height: 18,
+                          child: Column(
+                            children: [
+                              const SizedBox(height: 15),
+                              Text(
+                                items[index],
+                                style: const TextStyle(
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.w500,
+                                  color: Colors.white,
+                                ),
+                              ),
+                              Text(
+                                loses.toString(),
+                                style: const TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          ),
+                        );
+                      default:
+                        return Container();
+                    }
                   },
                 ),
               ),
@@ -173,7 +323,71 @@ class _HomeViewState extends State<HomeView> {
                             charts.OutsideJustification.middleDrawArea),
                   ],
                 ),
-              )
+              ),
+              const SizedBox(
+                height: 15,
+              ),
+              SizedBox(
+                height: 600,
+                width: 500,
+                child: Expanded(
+                    child: ListView.builder(
+                  itemCount: gameDataList.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('${index + 1}'),
+                            const SizedBox(
+                              width: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text('Game name'),
+                                Text(
+                                  gameDataList[index].game,
+                                ),
+                                const Text('Investment amount'),
+                                Text(gameDataList[index].bets.toString()),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text('Won'),
+                                        Text('${gameDataList[index].wins}com'),
+                                      ],
+                                    ),
+                                    const SizedBox(
+                                      width: 25,
+                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        const Text('Playtime'),
+                                        Text(
+                                            ' h ${gameDataList[index].playTime}'),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                )),
+              ),
             ],
           ),
         ),
@@ -227,12 +441,7 @@ class _HomeViewState extends State<HomeView> {
   }
 
   Future<void> showDiologMetot(BuildContext context) async {
-    final _formKey = GlobalKey<FormState>();
-    final gameNameControler = TextEditingController();
-    final amountController = TextEditingController();
-    final wonController = TextEditingController();
-    final playOneController = TextEditingController();
-    final playTwoController = TextEditingController();
+    final formKey = GlobalKey<FormState>();
     await showDialog(
       context: context,
       builder: (context) {
@@ -245,7 +454,7 @@ class _HomeViewState extends State<HomeView> {
                 height: 480,
                 child: SingleChildScrollView(
                   child: Form(
-                    key: _formKey,
+                    key: formKey,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -296,17 +505,73 @@ class _HomeViewState extends State<HomeView> {
                           'Game name',
                           style: TextStyle(color: Color(0xff8E86A6)),
                         ),
-                        TextFieledGame(
+                        TextFormField(
                           controller: gameNameControler,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff8E86A6), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0)),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.abc,
+                              color: Color(0xff8E86A6),
+                            ),
+                            labelText: 'Game name',
+                            labelStyle: const TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 5),
                         const Text(
                           'Investment amount',
                           style: TextStyle(color: Color(0xff8E86A6)),
                         ),
-                        TextFieledGame(
+                        TextFormField(
                           controller: amountController,
                           keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff8E86A6), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0)),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.money,
+                              color: Color(0xff8E86A6),
+                            ),
+                            labelText: 'Investment amount',
+                            labelStyle: const TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 5),
                         const Text(
@@ -314,9 +579,37 @@ class _HomeViewState extends State<HomeView> {
                           style: TextStyle(color: Color(0xff8E86A6)),
                         ),
                         const SizedBox(height: 4),
-                        TextFieledGame(
+                        TextFormField(
                           controller: wonController,
                           keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Color(0xff8E86A6), width: 1.5),
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(16.0)),
+                            ),
+                            prefixIcon: const Icon(
+                              Icons.money,
+                              color: Color(0xff8E86A6),
+                            ),
+                            labelText: 'Won',
+                            labelStyle: const TextStyle(
+                              fontSize: 16,
+                              fontStyle: FontStyle.italic,
+                              color: Colors.white,
+                            ),
+                            border: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                          ),
+                          style: const TextStyle(color: Colors.white),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
                         ),
                         const SizedBox(height: 5),
                         const Row(
@@ -331,18 +624,72 @@ class _HomeViewState extends State<HomeView> {
                         Row(
                           children: [
                             Expanded(
-                              child: TextFieledGame(
+                              child: TextFormField(
                                 controller: playOneController,
                                 keyboardType: TextInputType.number,
-                                labelText: ' h',
+                                decoration: InputDecoration(
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xff8E86A6), width: 1.5),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16.0)),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.timer,
+                                    color: Color(0xff8E86A6),
+                                  ),
+                                  labelText: ' h',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                style: const TextStyle(color: Colors.white),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                             const SizedBox(width: 2),
                             Expanded(
-                              child: TextFieledGame(
+                              child: TextFormField(
                                 controller: playTwoController,
                                 keyboardType: TextInputType.number,
-                                labelText: 'm',
+                                decoration: InputDecoration(
+                                  focusedBorder: const OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Color(0xff8E86A6), width: 1.5),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16.0)),
+                                  ),
+                                  prefixIcon: const Icon(
+                                    Icons.timer,
+                                    color: Color(0xff8E86A6),
+                                  ),
+                                  labelText: 'm',
+                                  labelStyle: const TextStyle(
+                                    fontSize: 16,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                ),
+                                style: const TextStyle(color: Colors.white),
+                                validator: (value) {
+                                  if (value == null || value.isEmpty) {
+                                    return 'Please enter some text';
+                                  }
+                                  return null;
+                                },
                               ),
                             ),
                           ],
@@ -359,7 +706,7 @@ class _HomeViewState extends State<HomeView> {
                               minimumSize: const Size(100, 50),
                             ),
                             onPressed: () {
-                              if (_formKey.currentState!.validate()) {
+                              if (formKey.currentState!.validate()) {
                                 setState(() {
                                   gameDataList.add(GameData(
                                     gameNameControler.text,
@@ -368,6 +715,13 @@ class _HomeViewState extends State<HomeView> {
                                     int.parse(playOneController.text),
                                     int.parse(playTwoController.text),
                                   ));
+                                  totalBets += int.parse(amountController.text);
+                                  playtime +=
+                                      int.parse(playOneController.text) * 60 +
+                                          int.parse(playTwoController.text);
+                                  won += int.parse(wonController.text);
+                                  loses += gameDataList.length - won - 1;
+                                  winRate = (won / gameDataList.length) * 100;
                                   // Clear text fields after submitting
                                   gameNameControler.clear();
                                   amountController.clear();
@@ -375,6 +729,7 @@ class _HomeViewState extends State<HomeView> {
                                   playOneController.clear();
                                   playTwoController.clear();
                                 });
+                                addInfo();
                                 Navigator.pop(context);
                               }
                             },
